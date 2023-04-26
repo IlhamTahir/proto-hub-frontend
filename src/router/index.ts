@@ -4,12 +4,9 @@ import LoginView from "@/views/login/index.vue";
 import LayoutView from "@/views/common/layout.vue";
 import NotFoundView from "@/views/error/not-found.vue";
 import NotAllowedView from "@/views/error/not-allowed.vue";
-import PageLayoutView from "@/views/common/page-layout.vue";
 import { useAppStore } from "@/store";
 import { PermissionEnum } from "@/config/permission.config";
 import { usePermissionStore } from "@/store/permission";
-import { useI18n } from "vue-i18n";
-import { i18n } from "@/plugins/i18n";
 
 declare module "vue-router" {
   interface RouteMeta extends Record<string | number | symbol, undefined> {
@@ -34,8 +31,14 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/project/index.vue"),
         meta: {
           permission: PermissionEnum.PROJECT,
-          title: "routes.dashboard",
-          icon: "dashboard",
+        },
+      },
+      {
+        name: "prototype",
+        path: "/project/:id/prototype",
+        component: () => import("@/views/project/prototype.vue"),
+        meta: {
+          permission: PermissionEnum.PROJECT,
         },
       },
     ],

@@ -1,0 +1,5 @@
+export enum ProtoStatus {
+  TO_DEVELOP = "TO_DEVELOP",
+  DEVELOPING = "DEVELOPING",
+  DEVELOPED = "DEVELOPED",
+}

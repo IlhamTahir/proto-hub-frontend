@@ -1,5 +1,19 @@
 <template>
-  <t-card :cover="cover" theme="poster2">
+  <t-card
+    class="project-card"
+    :cover="cover"
+    :bordered="false"
+    hoverShadow
+    @click="
+      () =>
+        $router.push({
+          name: 'prototype',
+          params: {
+            id,
+          },
+        })
+    "
+  >
     <template #footer>
       <t-comment :author="name" />
     </template>
@@ -18,4 +32,8 @@ withDefaults(defineProps<Props>(), {
 });
 </script>
 
-<style scoped></style>
+<style lang="less" scoped>
+.project-card {
+  cursor: pointer;
+}
+</style>
