@@ -92,6 +92,18 @@ export default {
       },
     },
   },
+  project: {
+    management: {
+      dialog: {
+        createTitle: "创建项目",
+        name: {
+          required: "项目名称不能为空",
+          label: "项目名称",
+          placeholder: "请输入项目名称",
+        },
+      },
+    },
+  },
   role: {
     management: {
       createBtn: "创建角色",

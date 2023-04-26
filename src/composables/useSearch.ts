@@ -1,9 +1,9 @@
 import { onMounted, reactive, ref } from "vue";
 import type { Ref } from "vue";
-import type { Searchable } from "@/api/types";
+import type { Searchable } from "@/model/base";
 import type { PageInfo, PaginationProps } from "tdesign-vue-next";
 
-export const useSearch = <T, K>(api: Searchable<T>, searchKey: K) => {
+export const useSearch = <T>(api: Searchable<T>, searchKey = {}) => {
   const data = <Ref<Array<T>>>ref([]);
   const pagination = reactive<PaginationProps>({
     current: 1,

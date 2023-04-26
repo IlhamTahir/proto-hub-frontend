@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 import type { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
-import type { ErrorResponse } from "@/api/types";
+import type { ErrorResponse } from "@/model/base";
 import { MessagePlugin } from "tdesign-vue-next";
 import { useAppStore } from "@/store";
 

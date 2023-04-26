@@ -26,50 +26,17 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: MENU_ROUTE_NAME,
     component: LayoutView,
-    redirect: "dashboard",
+    redirect: "project",
     children: [
       {
-        name: "dashboard",
-        path: "dashboard",
-        component: () => import("@/views/dashboard/index.vue"),
+        name: "project",
+        path: "project",
+        component: () => import("@/views/project/index.vue"),
         meta: {
-          permission: PermissionEnum.DASHBOARD,
+          permission: PermissionEnum.PROJECT,
           title: "routes.dashboard",
           icon: "dashboard",
         },
-      },
-      {
-        name: "user",
-        path: "user",
-        component: PageLayoutView,
-        meta: {
-          title: "routes.user",
-          icon: "usergroup",
-          permission: PermissionEnum.USER,
-        },
-        redirect: { name: "user-list" },
-        children: [
-          {
-            name: "user-list",
-            path: "list",
-            component: () => import("@/views/user/index.vue"),
-            meta: {
-              title: "routes.userManagement",
-              icon: "user",
-              permission: PermissionEnum.USER_LIST,
-            },
-          },
-          {
-            name: "role-list",
-            path: "roles",
-            component: () => import("@/views/user/roles.vue"),
-            meta: {
-              title: "routes.roleManagement",
-              permission: PermissionEnum.USER_ROLES,
-              icon: "secured",
-            },
-          },
-        ],
       },
     ],
   },

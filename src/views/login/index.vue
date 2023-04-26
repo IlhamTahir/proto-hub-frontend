@@ -67,7 +67,7 @@
 import { Icon, MessagePlugin } from "tdesign-vue-next";
 import type { SubmitContext } from "tdesign-vue-next";
 import { computed, reactive, ref } from "vue";
-import type { TokenRequest } from "@/api/types";
+import type { TokenRequest } from "@/model/token";
 import { useAppStore, useUserStore, useLocaleStore } from "@/store";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -100,7 +100,7 @@ const handleLogin = async ({ validateResult }: SubmitContext) => {
     await appStore.login(loginForm);
     await userStore.fetchCurrentUser();
     await MessagePlugin.success(t("login.successMessage"));
-    await router.push({ name: "dashboard" });
+    await router.push({ name: "project" });
   } finally {
     loading.value = false;
   }

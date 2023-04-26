@@ -1,7 +1,6 @@
 <template>
   <t-header class="header">
-    <collapse-button v-model:collapse="appStore.menuCollapse"></collapse-button>
-
+    <t-button variant="text" size="large">ProtoHub原型管理系统</t-button>
     <div class="operation-area">
       <t-dropdown
         :options="[
@@ -40,7 +39,6 @@ import { Icon } from "tdesign-vue-next";
 import { useAppStore, useLocaleStore, useUserStore } from "@/store";
 import type { DropdownOption } from "tdesign-vue-next";
 import { useRoute, useRouter } from "vue-router";
-import CollapseButton from "@/components/CollapseButton.vue";
 
 const userStore = useUserStore();
 const appStore = useAppStore();

@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import type { User } from "@/model/User";
+import type { User } from "@/model/user";
 import userApi from "@/api/user";
 import { usePermissionStore } from "@/store/permission";
 import { computed, ref } from "vue";
 import type { Ref } from "vue";
-import type Role from "@/model/Role";
+import type { Role } from "@/model/role";
 export const useUserStore = defineStore(
   "user",
   () => {

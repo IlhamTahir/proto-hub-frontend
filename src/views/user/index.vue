@@ -64,7 +64,7 @@ import { Icon } from "tdesign-vue-next";
 import { useSearch } from "@/composables/useSearch";
 import userApi from "@/api/user";
 import { computed, reactive } from "vue";
-import type { User, UserCreateRequest, UserEditRequest } from "@/model/User";
+import type { User, UserCreateRequest, UserEditRequest } from "@/model/user";
 import EditDialog from "@/views/user/edit-dialog.vue";
 import { useEditDialog } from "@/composables/useEditDialog";
 import { useI18n } from "vue-i18n";
@@ -83,12 +83,10 @@ const searchKey = reactive({
   username: "",
 });
 
-const { data, fetchData, pagination, loading, onPageChange } = useSearch<
-  User,
-  {
-    username: string;
-  }
->(userApi, searchKey);
+const { data, fetchData, pagination, loading, onPageChange } = useSearch<User>(
+  userApi,
+  searchKey
+);
 
 const {
   showDialog,

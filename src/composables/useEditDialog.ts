@@ -2,8 +2,7 @@ import { ref } from "vue";
 import type { Ref } from "vue";
 import type { CellData } from "tdesign-vue-next";
 import { MessagePlugin } from "tdesign-vue-next";
-import type { Editable } from "@/api/types";
-import type { BaseModel } from "@/model/BaseModel";
+import type { BaseModel, Editable } from "@/model/base";
 import { useI18n } from "@/composables/useI18n";
 
 const { t } = useI18n();

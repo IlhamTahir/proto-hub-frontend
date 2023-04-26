@@ -1,18 +1,15 @@
-import type {
-  ListResult,
-  RoleCreateRequest,
-  RoleFilter,
-  RoleType,
-} from "@/api/types";
-import request from "@/api/request";
+import type { ListResult } from "@/model/base";
 
-const list = (filter: RoleFilter): Promise<ListResult<RoleType>> => {
+import request from "@/api/request";
+import type { Role, RoleCreateRequest, RoleFilter } from "@/model/role";
+
+const list = (filter: RoleFilter): Promise<ListResult<Role>> => {
   return request.get("/roles", {
     params: filter,
   });
 };
 
-const create = (roleCreateRequest: RoleCreateRequest): Promise<RoleType> => {
+const create = (roleCreateRequest: RoleCreateRequest): Promise<Role> => {
   return request.post("/roles", roleCreateRequest);
 };
 
@@ -20,7 +17,7 @@ const create = (roleCreateRequest: RoleCreateRequest): Promise<RoleType> => {
 const edit = (
   id: string,
   roleEditRequest: RoleCreateRequest
-): Promise<RoleType> => {
+): Promise<Role> => {
   return request.put(`/roles/${id}`, roleEditRequest);
 };
 

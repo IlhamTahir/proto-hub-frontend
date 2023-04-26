@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { TokenRequest } from "@/api/types";
+import type { TokenRequest } from "@/model/token";
 import tokenApi from "@/api/token";
 import { useUserStore } from "@/store/user";
 

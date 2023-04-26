@@ -1,17 +1,15 @@
-import type Role from "@/model/Role";
+import type { Role } from "@/model/role";
 import type { Gender } from "@/enums/Gender";
+import type { BaseModel, Paging } from "@/model/base";
 
-export interface User {
-  id: string;
+export interface User extends BaseModel {
   username: string;
   nickname: string;
   gender?: Gender;
   roles: Role[];
-  permissions: Array<string>;
+  permissions: string[];
   locked: boolean;
   enabled: boolean;
-  createdTime?: Date;
-  updatedTime?: Date;
 }
 export interface UserCreateRequest
   extends Pick<Partial<User>, "id" | "username" | "nickname" | "roles"> {
@@ -22,3 +20,7 @@ export type UserEditRequest = Pick<
   Partial<User>,
   "id" | "username" | "nickname" | "roles"
 >;
+
+export interface UserFilter extends Paging {
+  name: string;
+}
