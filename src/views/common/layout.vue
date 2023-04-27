@@ -7,7 +7,7 @@
           <router-view></router-view>
         </t-content>
         <t-footer style="text-align: center"
-          >Copyright @ 2021-2022 YiliAdmin.</t-footer
+          >Copyright @ 2021-2022 ProtoHub.</t-footer
         >
       </t-layout>
     </t-layout>

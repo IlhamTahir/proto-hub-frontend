@@ -5,7 +5,7 @@ import type { ErrorResponse } from "@/model/base";
 import { MessagePlugin } from "tdesign-vue-next";
 import { useAppStore } from "@/store";
 
-const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
+export const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
 
 const instance: AxiosInstance = axios.create({
   baseURL: BASE_URL,

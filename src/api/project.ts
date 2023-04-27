@@ -10,6 +10,7 @@ import type {
   ProtoCreateRequest,
   ProtoSearchFilter,
 } from "@/model/proto";
+import type { CreateVersionRequest } from "@/model/version";
 
 export const list = (
   searchFilter: ProjectSearchFilter
@@ -40,10 +41,22 @@ export const createProto = (id: string, createRequest: ProtoCreateRequest) => {
   return request.post(`/projects/${id}/proto`, createRequest);
 };
 
+export const createVersion = (
+  id: string,
+  protoId: string,
+  createRequest: CreateVersionRequest
+) => {
+  return request.post(
+    `/projects/${id}/proto/${protoId}/version`,
+    createRequest
+  );
+};
+
 export default {
   list,
   create,
   detail,
   protoList,
   createProto,
+  createVersion,
 };
