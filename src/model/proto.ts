@@ -9,3 +9,5 @@ export interface Proto extends BaseModel {
 export interface ProtoSearchFilter extends Paging {
   name: string;
 }
+
+export type ProtoCreateRequest = Pick<Proto, "name">;

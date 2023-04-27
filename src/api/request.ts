@@ -26,8 +26,10 @@ instance.interceptors.response.use(
     return response.data;
   },
   async (error: AxiosError<ErrorResponse>) => {
-    const responseData: ErrorResponse | undefined = error.response?.data;
-    responseData && (await MessagePlugin.error(responseData.message));
+    const responseData: ErrorResponse | ErrorResponse[] | undefined =
+      error.response?.data;
+
+    handleResponseData(responseData);
 
     if (error.response?.status === 401 || error.response?.status === 403) {
       const appStore = useAppStore();
@@ -36,5 +38,13 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+const handleResponseData = (
+  responseData: ErrorResponse | ErrorResponse[] | undefined
+) => {
+  if (!responseData) return;
+  !(responseData instanceof Array) && (responseData = [responseData]);
+  responseData.forEach((response) => MessagePlugin.error(response.message));
+};
 
 export default instance;

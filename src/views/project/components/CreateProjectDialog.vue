@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import type { ProjectCreateRequest } from "@/model/project";
 import { useSearch } from "@/composables/useSearch";
@@ -45,6 +45,7 @@ import type { User } from "@/model/user";
 import userApi from "@/api/user";
 import projectApi from "@/api/project";
 import { MessagePlugin } from "tdesign-vue-next";
+import type { FormInstanceFunctions } from "tdesign-vue-next";
 const { t } = useI18n();
 
 interface Props {
@@ -55,8 +56,12 @@ const emit = defineEmits(["close", "success"]);
 const props = withDefaults(defineProps<Props>(), { show: false });
 
 const visible = computed(() => props.show);
+const form = ref<FormInstanceFunctions | null>(null);
 
 const handleConfirm = async () => {
+  if (form.value === null || (await form.value.validate()) !== true) {
+    return;
+  }
   const result = await projectApi.create(project);
   await MessagePlugin.success(t("dialog.createSuccessMessage"));
   emit("success", result);
@@ -77,7 +82,7 @@ const rules = computed(() => {
       },
       {
         min: 4,
-        max: 64,
+        max: 128,
         trigger: "blur",
         message: t("project.management.dialog.name.sizeRule"),
       },

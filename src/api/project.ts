@@ -5,7 +5,11 @@ import type {
 } from "@/model/project";
 import request from "@/api/request";
 import type { ListResult } from "@/model/base";
-import type { Proto, ProtoSearchFilter } from "@/model/proto";
+import type {
+  Proto,
+  ProtoCreateRequest,
+  ProtoSearchFilter,
+} from "@/model/proto";
 
 export const list = (
   searchFilter: ProjectSearchFilter
@@ -32,9 +36,14 @@ export const protoList = (
   });
 };
 
+export const createProto = (id: string, createRequest: ProtoCreateRequest) => {
+  return request.post(`/projects/${id}/proto`, createRequest);
+};
+
 export default {
   list,
   create,
   detail,
   protoList,
+  createProto,
 };
