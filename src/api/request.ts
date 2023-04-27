@@ -4,12 +4,16 @@ import type { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 import type { ErrorResponse } from "@/model/base";
 import { MessagePlugin } from "tdesign-vue-next";
 import { useAppStore } from "@/store";
+import qs from "qs";
 
 export const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
 
 const instance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 60000,
+  paramsSerializer: (params) => {
+    return qs.stringify(params, { indices: false });
+  },
 });
 const tokenPrefix = "Bearer ";
 

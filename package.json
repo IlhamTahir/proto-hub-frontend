@@ -18,6 +18,7 @@
     "echarts-for-vue": "^1.4.1",
     "pinia": "^2.0.21",
     "pinia-plugin-persistedstate": "^2.1.1",
+    "qs": "^6.11.1",
     "tdesign-icons-vue-next": "^0.1.8",
     "tdesign-vue-next": "^1.0.0",
     "vue": "^3.2.37",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/node": "^16.11.47",
+    "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^3.0.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",

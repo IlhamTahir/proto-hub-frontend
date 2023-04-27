@@ -43,6 +43,14 @@ export const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    name: "version-view",
+    path: "/project/:id/prototype/:prototypeId/version/:versionId",
+    component: () => import("@/views/project/version-detail.vue"),
+    meta: {
+      permission: PermissionEnum.PROJECT,
+    },
+  },
   { path: "/login", name: "login", component: LoginView },
   { path: "/403", name: "not-allowed", component: NotAllowedView },
   { path: "/:pathMatch(.*)*", name: "not-found", component: NotFoundView },

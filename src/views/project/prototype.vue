@@ -24,10 +24,19 @@
         :data="data"
         :pagination="pagination"
         @page-change="onPageChange"
+        @sort-change="onSortChange"
+        @filter-change="onFilterChange"
         cellEmptyContent="-"
       >
         <template #operation="{ row }">
-          <t-button variant="text" theme="primary"> 预览 </t-button>
+          <t-button
+            variant="text"
+            theme="primary"
+            :disabled="!row.lastVersionId"
+            @click="handleView(id, row.id, row.lastVersionId)"
+          >
+            预览
+          </t-button>
           <t-button variant="text" theme="primary"> 详情 </t-button>
           <t-button
             variant="text"
@@ -67,17 +76,16 @@
 import { IconFont } from "tdesign-icons-vue-next";
 import projectApi from "@/api/project";
 import { useRoute, useRouter } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import type { Project } from "@/model/project";
 import { useSearch } from "@/composables/useSearch";
-import type { Proto, ProtoSearchFilter } from "@/model/proto";
+import type { ProtoSearchFilter } from "@/model/proto";
 import { useDialog } from "@/composables/useDialog";
 import CreateProtoDialog from "@/views/project/components/CreateProtoDialog.vue";
 import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
 
-import { ProtoStatusLabel } from "@/enums/proto";
-import type { BaseTableCellParams } from "tdesign-vue-next";
-import { formatDateTime } from "@/utils/date-util";
+import { ProtoStatus, ProtoStatusLabel } from "@/enums/proto";
+
 const projectDetail = ref<Project | null>(null);
 const id = useRoute().params.id as string;
 const router = useRouter();
@@ -85,6 +93,16 @@ const clickUpdateVersion = (protoId: string) => {
   editProtoId.value = protoId;
   updateVersionDialog.showDialog();
 };
+
+const searchKey = reactive<{
+  sortBy: string[];
+  direction: string;
+  status: ProtoStatus | "";
+}>({
+  sortBy: [],
+  direction: "desc",
+  status: "",
+});
 
 const onUpdateVersionDialogClose = () => {
   editProtoId.value = "";
@@ -101,24 +119,48 @@ const list = async (filter: ProtoSearchFilter) => {
 };
 const columns = [
   { colKey: "name", title: "迭代名称", align: "center" },
-  { colKey: "status", title: "迭代状态", align: "center" },
-  { colKey: "lastVersionNumber", title: "最新版本", align: "center" },
+  {
+    colKey: "status",
+    title: "迭代状态",
+    align: "center",
+    filter: {
+      type: "single",
+      list: [
+        { label: "待开发", value: "TO_DEVELOP" },
+        { label: "开发中", value: "DEVELOPING" },
+        { label: "已开发", value: "DEVELOPED" },
+      ],
+    },
+  },
+  {
+    colKey: "createdTime",
+    title: "创建时间",
+    align: "center",
+    sorter: true,
+  },
+  {
+    colKey: "lastVersionNumber",
+    title: "最新版本",
+    align: "center",
+    sorter: true,
+  },
   {
     colKey: "lastVersionUpdatedTime",
     title: "更新时间",
     align: "center",
-    cell: (h: never, { row }: BaseTableCellParams<Proto>) => {
-      return formatDateTime(row.lastVersionUpdatedTime);
-    },
+    sorter: true,
   },
   { colKey: "lastVersionLog", title: "更新日志", align: "center" },
-  { colKey: "operation", title: "操作", align: "center" },
+  { colKey: "operation", title: "操作", align: "center", width: 350 },
 ];
-const { data, loading, onPageChange, pagination, fetchData } = useSearch({
-  list,
-});
+const { data, loading, onPageChange, pagination, fetchData } = useSearch(
+  {
+    list,
+  },
+  searchKey
+);
 
-const handleSuccess = (project: Project) => {
+const handleSuccess = () => {
   fetchData();
   createProtoDialog.hideDialog();
 };
@@ -130,6 +172,37 @@ const updateVersionDialog = useDialog();
 const onUpdateVersionDialogSuccess = () => {
   fetchData();
   updateVersionDialog.hideDialog();
+};
+
+const onSortChange = (sort: { sortBy: string; descending: boolean }) => {
+  if (!sort) {
+    searchKey.sortBy = [];
+    searchKey.direction = "desc";
+  } else {
+    searchKey.sortBy = [sort.sortBy];
+    searchKey.direction = sort.descending ? "desc" : "asc";
+  }
+  fetchData();
+};
+
+const onFilterChange = (filter: { status: ProtoStatus }) => {
+  searchKey.status = filter.status;
+  fetchData();
+};
+
+const handleView = (
+  projectId: string,
+  prototypeId: string,
+  versionId: string
+) => {
+  router.push({
+    name: "version-view",
+    params: {
+      id: projectId,
+      prototypeId,
+      versionId,
+    },
+  });
 };
 </script>
 
