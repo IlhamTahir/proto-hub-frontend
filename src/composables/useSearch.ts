@@ -1,9 +1,13 @@
-import { onMounted, reactive, ref } from "vue";
 import type { Ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import type { Searchable } from "@/model/base";
 import type { PageInfo, PaginationProps } from "tdesign-vue-next";
 
-export const useSearch = <T>(api: Searchable<T>, searchKey = {}) => {
+export const useSearch = <T>(
+  api: Searchable<T>,
+  searchKey = {},
+  config: { disableOnMounted: boolean } = { disableOnMounted: true }
+) => {
   const data = <Ref<Array<T>>>ref([]);
   const pagination = reactive<PaginationProps>({
     current: 1,
@@ -35,7 +39,7 @@ export const useSearch = <T>(api: Searchable<T>, searchKey = {}) => {
       });
   };
 
-  onMounted(fetchData);
+  config.disableOnMounted && onMounted(fetchData);
 
   const onPageChange = (pageInfo: PageInfo) => {
     pagination.current = pageInfo.current;

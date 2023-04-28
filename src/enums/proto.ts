@@ -10,10 +10,16 @@ export const ProtoStatusLabel = {
   },
   [ProtoStatus.DEVELOPING]: {
     title: "开发中",
-    type: "error",
+    type: "danger",
   },
   [ProtoStatus.DEVELOPED]: {
     title: "已开发",
     type: "success",
   },
 };
+
+export const protoStatusOptions = [
+  { value: ProtoStatus.TO_DEVELOP, label: "待开发" },
+  { value: ProtoStatus.DEVELOPING, label: "开发中" },
+  { value: ProtoStatus.DEVELOPED, label: "已开发" },
+];

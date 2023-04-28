@@ -8,6 +8,7 @@ export interface Proto extends BaseModel {
   lastVersionNumber: number;
   lastVersionUpdatedTime: Date;
   lastVersionLog: string;
+  baselineVersionNumber: number;
 }
 
 export interface ProtoSearchFilter extends Paging {

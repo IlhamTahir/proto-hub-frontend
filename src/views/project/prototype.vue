@@ -37,7 +37,13 @@
           >
             预览
           </t-button>
-          <t-button variant="text" theme="primary"> 详情 </t-button>
+          <t-button
+            variant="text"
+            theme="primary"
+            @click="clickVersionList(row.id)"
+          >
+            详情
+          </t-button>
           <t-button
             variant="text"
             theme="primary"
@@ -45,7 +51,13 @@
           >
             更新版本
           </t-button>
-          <t-button variant="text" theme="primary"> 更新状态 </t-button>
+          <t-button
+            variant="text"
+            theme="primary"
+            @click="clickUpdateProtoStatus(row.id, row.status)"
+          >
+            更新状态
+          </t-button>
         </template>
         <template #status="{ row }">
           <t-tag
@@ -69,6 +81,20 @@
       @close="onUpdateVersionDialogClose"
       @success="onUpdateVersionDialogSuccess"
     ></UpdateVersionDialog>
+    <VersionListDialog
+      :show="versionListDialog.visible.value"
+      :proto-id="editProtoId"
+      :project-id="id"
+      @close="onVersionListDialogClose"
+    ></VersionListDialog>
+    <UpdateProtoStatusDialog
+      :show="updateProtoStatus.visible.value"
+      :proto-id="editProtoId"
+      :project-id="id"
+      :status="currentProtoStatus"
+      @close="onProtoStatusDialogClose"
+      @success="onProtoStatusDialogSuccess"
+    ></UpdateProtoStatusDialog>
   </div>
 </template>
 
@@ -85,6 +111,8 @@ import CreateProtoDialog from "@/views/project/components/CreateProtoDialog.vue"
 import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
 
 import { ProtoStatus, ProtoStatusLabel } from "@/enums/proto";
+import VersionListDialog from "@/views/project/components/VersionListDialog.vue";
+import UpdateProtoStatusDialog from "@/views/project/components/UpdateProtoStatusDialog.vue";
 
 const projectDetail = ref<Project | null>(null);
 const id = useRoute().params.id as string;
@@ -94,6 +122,32 @@ const clickUpdateVersion = (protoId: string) => {
   updateVersionDialog.showDialog();
 };
 
+const clickUpdateProtoStatus = (protoId: string, status: ProtoStatus) => {
+  editProtoId.value = protoId;
+  currentProtoStatus.value = status;
+  updateProtoStatus.showDialog();
+};
+const clickVersionList = (protoId: string) => {
+  editProtoId.value = protoId;
+  versionListDialog.showDialog();
+};
+
+const onVersionListDialogClose = () => {
+  editProtoId.value = "";
+  versionListDialog.hideDialog();
+};
+
+const onProtoStatusDialogClose = () => {
+  editProtoId.value = "";
+  updateProtoStatus.hideDialog();
+};
+
+const onProtoStatusDialogSuccess = () => {
+  fetchData();
+  onProtoStatusDialogClose();
+};
+
+const currentProtoStatus = ref(ProtoStatus.TO_DEVELOP);
 const searchKey = reactive<{
   sortBy: string[];
   direction: string;
@@ -144,13 +198,20 @@ const columns = [
     align: "center",
     sorter: true,
   },
+
   {
     colKey: "lastVersionUpdatedTime",
     title: "更新时间",
     align: "center",
     sorter: true,
   },
-  { colKey: "lastVersionLog", title: "更新日志", align: "center" },
+
+  { colKey: "lastVersionLog", title: "更新日志" },
+  {
+    colKey: "baselineVersionNumber",
+    title: "当前基线版本",
+    align: "center",
+  },
   { colKey: "operation", title: "操作", align: "center", width: 350 },
 ];
 const { data, loading, onPageChange, pagination, fetchData } = useSearch(
@@ -204,6 +265,9 @@ const handleView = (
     },
   });
 };
+
+const versionListDialog = useDialog();
+const updateProtoStatus = useDialog();
 </script>
 
 <style scoped>

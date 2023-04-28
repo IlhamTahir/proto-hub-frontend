@@ -10,7 +10,12 @@ import type {
   ProtoCreateRequest,
   ProtoSearchFilter,
 } from "@/model/proto";
-import type { CreateVersionRequest, Version } from "@/model/version";
+import type {
+  CreateVersionRequest,
+  Version,
+  VersionSearchFilter,
+} from "@/model/version";
+import type { ProtoStatus } from "@/enums/proto";
 
 export const list = (
   searchFilter: ProjectSearchFilter
@@ -37,8 +42,15 @@ export const protoList = (
   });
 };
 
-export const createProto = (id: string, createRequest: ProtoCreateRequest) => {
+export const createProto = (
+  id: string,
+  createRequest: ProtoCreateRequest
+): Promise<Proto> => {
   return request.post(`/projects/${id}/proto`, createRequest);
+};
+
+export const getProto = (id: string, protoId: string): Promise<Proto> => {
+  return request.get(`/projects/${id}/proto/${protoId}`);
 };
 
 const createVersion = (
@@ -52,6 +64,16 @@ const createVersion = (
   );
 };
 
+const versionList = (
+  id: string,
+  protoId: string,
+  searchFilter: VersionSearchFilter
+): Promise<ListResult<Version>> => {
+  return request.get(`/projects/${id}/proto/${protoId}/version`, {
+    params: searchFilter,
+  });
+};
+
 const getVersion = (
   id: string,
   protoId: string,
@@ -59,7 +81,25 @@ const getVersion = (
 ): Promise<Version> => {
   return request.get(`/projects/${id}/proto/${protoId}/version/${versionId}`);
 };
+const updateProtoStatus = (
+  projectId: string,
+  protoId: string,
+  status: ProtoStatus
+) => {
+  return request.post(`/projects/${projectId}/proto/${protoId}/status`, {
+    status,
+  });
+};
 
+const setBaselineVersion = (
+  projectId: string,
+  protoId: string,
+  versionId: string
+) => {
+  return request.post(
+    `/projects/${projectId}/proto/${protoId}/baseline_version/${versionId}`
+  );
+};
 export default {
   list,
   create,
@@ -68,4 +108,8 @@ export default {
   createProto,
   createVersion,
   getVersion,
+  versionList,
+  getProto,
+  updateProtoStatus,
+  setBaselineVersion,
 };

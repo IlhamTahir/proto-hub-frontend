@@ -6,6 +6,17 @@
       scrolling="no"
       :src="baseUrl + version.demoPath"
     ></iframe>
+    <TriggerIsland
+      v-if="version"
+      @click-version-list="versionListDialog.showDialog"
+      :title="`版本号: ${version.number}`"
+    ></TriggerIsland>
+    <VersionListDialog
+      :show="versionListDialog.visible.value"
+      :proto-id="protoId"
+      :project-id="projectId"
+      @close="onClose"
+    ></VersionListDialog>
   </div>
 </template>
 
@@ -14,6 +25,9 @@ import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import type { Version } from "@/model/version";
 import projectApi from "@/api/project";
+import TriggerIsland from "@/views/project/components/TriggerIsland.vue";
+import VersionListDialog from "@/views/project/components/VersionListDialog.vue";
+import { useDialog } from "@/composables/useDialog";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const route = useRoute();
@@ -27,6 +41,12 @@ const fetchData = async () => {
 };
 
 onMounted(fetchData);
+
+const versionListDialog = useDialog();
+
+const onClose = () => {
+  versionListDialog.hideDialog();
+};
 </script>
 
 <style lang="less" scoped>

@@ -1,4 +1,4 @@
-import type { BaseModel } from "@/model/base";
+import type { BaseModel, Paging } from "@/model/base";
 import type { Proto } from "@/model/proto";
 
 export interface Version extends BaseModel {
@@ -13,3 +13,5 @@ export interface CreateVersionRequest {
   log: string;
   fileId: string;
 }
+
+export type VersionSearchFilter = Paging;
