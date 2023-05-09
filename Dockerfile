@@ -1,10 +1,10 @@
 # build stage
-FROM node:lts-alpine as build-stage
+FROM ilhamtahir/node-ci:master as build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm config set registry https://registry.npm.taobao.org && npm install
+RUN pnpm install
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 # production stage
 FROM nginx:stable-alpine as production-stage

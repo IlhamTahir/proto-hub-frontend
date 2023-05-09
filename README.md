@@ -1,46 +1,29 @@
-# YiliAdmin
+# ProtoHub
+一个纯粹的产品原型管理工具-前端仓库
 
-YiliAdmin是一个后台解决方案，它基于Vue3与TDesign实现。它可以帮助你快速搭建企业级中后台产品原型。
+## 前言
 
-## 演示站
+本项目是为了公司内部产品原型的变更及相关信息合理管理，为开发和产品提供高效的合作模式而生。
 
-[国内演示站点](https://yili-admin-17768-5-1308655658.sh.run.tcloudbase.com/)
+研发过程会4k录制方式分享在B站合辑中。需要的同学可以看：
+https://www.bilibili.com/video/BV1Zv4y1G7Ef/?spm_id_from=333.999.0.0
 
-[GithubPages](https://ilhamtarhi.com/yili-admin)
+> 如果喜欢一键三连 + Star 点起来。 感谢！
 
-## 默认登录账号
 
-**账号** admin
+## 技术栈
 
-**密码** 900602
+Vue3 + TypeScript
 
-## 功能特性
+## 项目看板
 
-- [X] 登录/注销
-- [ ] 权限验证
-    - [ ] 动态路由
-    - [X] 权限指令
-- [X] 实用组件
-    - [X] ECharts
-    - [ ] 上传组件
-        - [ ] 普通上传
-        - [ ] 端点续传
-        - [ ] 头像上传（裁剪上传）
-- [X] 控制台
-- [X] 用户管理
-- [X] 角色管理
-- [ ] 表格
-    - [ ] 基础表格
-    - [ ] 内联编辑
-- [ ] 编辑器
-    - [ ] MarkDown
-    - [ ] Rich Text
-    - [ ] JSON Editor
-- [X] 错误页面
-    - [X] 403
-    - [X] 404
-    - [X] 500
-- [ ] 新手引导
-- [X] CURD模板生成器
-- [X] 镜像打包机制
-- [ ] 多语言
+项目正在迭代中，欢迎加入看板关注项目进度！
+
+[点击加入看板](https://www.gogoscrum.com/invitations/prJqgr1VDBMW)
+
+**项目任何问题欢迎提issues**
+
+
+## 初始账号
+账号：admin
+密码：900602
