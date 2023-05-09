@@ -61,9 +61,9 @@
         </template>
         <template #status="{ row }">
           <t-tag
-            :theme="ProtoStatusLabel[row.status].type"
+            :theme="ProtoStatusLabel[row.status as ProtoStatus].type"
             variant="light-outline"
-            >{{ ProtoStatusLabel[row.status].title }}</t-tag
+            >{{ ProtoStatusLabel[row.status as ProtoStatus].title }}</t-tag
           >
         </template>
       </t-table>
@@ -107,7 +107,6 @@ import type { Project } from "@/model/project";
 import { useSearch } from "@/composables/useSearch";
 import type { ProtoSearchFilter } from "@/model/proto";
 import { useDialog } from "@/composables/useDialog";
-import CreateProtoDialog from "@/views/project/components/CreateProtoDialog.vue";
 import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
 
 import { ProtoStatus, ProtoStatusLabel } from "@/enums/proto";

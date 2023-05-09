@@ -1,9 +1,7 @@
 <template>
   <t-card>
     <div class="action-area">
-      <t-button
-        v-permission="PermissionEnum.USER_LIST_CREATE"
-        @click="handleCreate"
+      <t-button @click="handleCreate"
         >{{ $t("user.management.createBtn") }}
       </t-button>
     </div>
@@ -28,12 +26,7 @@
       @page-change="onPageChange"
     >
       <template #operation="slotProps">
-        <t-button
-          v-permission="PermissionEnum.USER_LIST_EDIT"
-          variant="text"
-          theme="primary"
-          @click="handleEdit(slotProps)"
-        >
+        <t-button variant="text" theme="primary" @click="handleEdit(slotProps)">
           <icon name="edit"></icon>
           {{ $t("edit") }}
         </t-button>
@@ -59,7 +52,6 @@
 </template>
 
 <script lang="ts" setup>
-import { PermissionEnum } from "@/config/permission.config";
 import { Icon } from "tdesign-vue-next";
 import { useSearch } from "@/composables/useSearch";
 import userApi from "@/api/user";

@@ -1,9 +1,7 @@
 <template>
   <t-card>
     <div class="action-area">
-      <t-button
-        v-permission="PermissionEnum.USER_ROLES_CREATE"
-        @click="handleCreate"
+      <t-button @click="handleCreate"
         >{{ $t("role.management.createBtn") }}
       </t-button>
     </div>
@@ -33,12 +31,7 @@
       @page-change="onPageChange"
     >
       <template #operation="slotProps">
-        <t-button
-          v-permission="PermissionEnum.USER_LIST_EDIT"
-          variant="text"
-          theme="primary"
-          @click="handleEdit(slotProps)"
-        >
+        <t-button variant="text" theme="primary" @click="handleEdit(slotProps)">
           <icon name="edit"></icon>
           {{ $t("edit") }}
         </t-button>
@@ -54,9 +47,8 @@
 </template>
 
 <script lang="ts" setup>
-import { PermissionEnum } from "@/config/permission.config";
 import { useEditDialog } from "@/composables/useEditDialog";
-import type { RoleCreateRequest, RoleEditRequest, RoleType } from "@/api/types";
+import type { Role, RoleCreateRequest, RoleEditRequest } from "@/model/role";
 import roleApi from "@/api/role";
 import { computed, reactive } from "vue";
 import { useSearch } from "@/composables/useSearch";
@@ -86,14 +78,11 @@ const {
   onDialogClose,
   handleEdit,
   handleConfirm,
-} = useEditDialog<RoleType, RoleCreateRequest, RoleEditRequest>(roleApi);
+} = useEditDialog<Role, RoleCreateRequest, RoleEditRequest>(roleApi);
 
-const { data, fetchData, pagination, loading, onPageChange } = useSearch<
-  RoleType,
-  {
-    name: string;
-    label: string;
-  }
->(roleApi, searchKey);
+const { data, fetchData, pagination, loading, onPageChange } = useSearch<Role>(
+  roleApi,
+  searchKey
+);
 </script>
 <style lang="less" scoped></style>

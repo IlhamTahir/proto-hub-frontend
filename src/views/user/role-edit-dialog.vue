@@ -47,16 +47,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue";
-import type { RoleType } from "@/api/types";
 import type { Ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { permissionsTree } from "@/config/permission.config";
 import { useI18n } from "@/composables/useI18n";
+import type { Role } from "@/model/role";
 
 const { t } = useI18n();
 interface Props {
   show: boolean;
-  data: RoleType | null;
+  data: Role | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -75,14 +75,14 @@ const rules = computed(() => {
   };
 });
 
-const defaultData: RoleType = {
+const defaultData: Role = {
   id: "",
   name: "",
   label: "",
   permissions: [],
 };
 
-const role: Ref<RoleType> = ref(props.data || defaultData);
+const role: Ref<Role> = ref(props.data || defaultData);
 
 watch(props, (newValue) => {
   role.value = newValue.data || defaultData;
