@@ -11,7 +11,7 @@ export default {
     roleManagement: "Role Management",
   },
   login: {
-    title: "Yili Admin Login",
+    title: "ProtoHub Login",
     username: {
       placeholder: "input your account please",
       required: "need to input your username",

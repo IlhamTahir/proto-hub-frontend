@@ -37,7 +37,7 @@ import projectApi from "@/api/project";
 import type { Project } from "@/model/project";
 import CreateProjectButton from "@/views/project/components/CreateProjectButton.vue";
 import { useDialog } from "@/composables/useDialog";
-import CreateProjectDialog from "@/views/project/components/CreateProjectDialog.vue";
+
 const { data, pagination, fetchData, loading, onPageChange } =
   useSearch<Project>(projectApi);
 

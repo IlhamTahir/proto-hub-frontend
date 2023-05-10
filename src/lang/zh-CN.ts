@@ -11,7 +11,7 @@ export default {
     roleManagement: "角色管理",
   },
   login: {
-    title: "Yili Admin 登录",
+    title: "ProtoHub 登录",
     username: {
       placeholder: "请输入用户名",
       required: "请填写用户名",
