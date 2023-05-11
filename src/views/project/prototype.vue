@@ -68,12 +68,12 @@
         </template>
       </t-table>
     </t-card>
-    <CreateProtoDialog
+    <CreateProtoModal
       :show="createProtoDialog.visible.value"
       :project-id="id"
       @close="createProtoDialog.hideDialog"
       @success="handleSuccess"
-    ></CreateProtoDialog>
+    ></CreateProtoModal>
     <UpdateVersionDialog
       :show="updateVersionDialog.visible.value"
       :project-id="id"
@@ -108,7 +108,7 @@ import { useSearch } from "@/composables/useSearch";
 import type { ProtoSearchFilter } from "@/model/proto";
 import { useDialog } from "@/composables/useDialog";
 import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
-
+import CreateProtoModal from "@/views/project/components/CreateProtoDialog.vue";
 import { ProtoStatus, ProtoStatusLabel } from "@/enums/proto";
 import VersionListDialog from "@/views/project/components/VersionListDialog.vue";
 import UpdateProtoStatusDialog from "@/views/project/components/UpdateProtoStatusDialog.vue";
