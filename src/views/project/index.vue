@@ -14,15 +14,15 @@
       >
       </t-pagination>
       <CreateProjectButton
-        @click="createProjectDialog.showDialog"
+        @click="createProject.showDialog"
       ></CreateProjectButton>
       <CreateProjectDialog
-        :show="createProjectDialog.visible.value"
-        @close="createProjectDialog.hideDialog"
+        :show="createProject.visible.value"
+        @close="createProject.hideDialog"
         @success="
           () => {
             fetchData();
-            createProjectDialog.hideDialog();
+            createProject.hideDialog();
           }
         "
       ></CreateProjectDialog>
@@ -37,11 +37,12 @@ import projectApi from "@/api/project";
 import type { Project } from "@/model/project";
 import CreateProjectButton from "@/views/project/components/CreateProjectButton.vue";
 import { useDialog } from "@/composables/useDialog";
+import CreateProjectDialog from "@/views/project/components/CreateProjectDialog.vue";
 
 const { data, pagination, fetchData, loading, onPageChange } =
   useSearch<Project>(projectApi);
 
-const createProjectDialog = useDialog();
+const createProject = useDialog();
 </script>
 
 <style lang="less" scoped>
