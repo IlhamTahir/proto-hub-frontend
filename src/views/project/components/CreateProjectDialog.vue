@@ -25,7 +25,7 @@
           placeholder="请选择负责的产品经理"
           :keys="{
             value: 'id',
-            label: 'username',
+            label: 'nickname',
           }"
           :on-search="searchUsers"
           :loading="users.loading.value"
@@ -96,12 +96,12 @@ const rules = computed(() => {
   };
 });
 const searchKeys = reactive({
-  username: "",
+  nickname: "",
 });
 const users = useSearch<User>(userApi, searchKeys);
 
 const searchUsers = (search: string) => {
-  searchKeys.username = search;
+  searchKeys.nickname = search;
   users.fetchData();
 };
 </script>
