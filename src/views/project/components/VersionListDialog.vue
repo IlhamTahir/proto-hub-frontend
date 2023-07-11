@@ -29,6 +29,7 @@
       :data="data"
       :pagination="pagination"
       @page-change="onPageChange"
+      @sort-change="onSortChange"
       cellEmptyContent="-"
       maxHeight="500px"
       paginationAffixedBottom
@@ -160,6 +161,16 @@ watch(
   },
   { deep: true }
 );
+const onSortChange = (sort: { sortBy: string; descending: boolean }) => {
+  if (!sort) {
+    searchKey.sortBy = [];
+    searchKey.direction = "desc";
+  } else {
+    searchKey.sortBy = [sort.sortBy];
+    searchKey.direction = sort.descending ? "desc" : "asc";
+  }
+  fetchData();
+};
 
 const handleBaselineVersion = async (
   projectId: string,
