@@ -1,6 +1,11 @@
 <template>
   <t-header class="header">
-    <t-button variant="text" size="large">ProtoHub原型管理系统</t-button>
+    <t-button
+      @click="() => router.replace({ name: 'project' })"
+      variant="text"
+      size="large"
+      >{{ appName }}</t-button
+    >
     <div class="operation-area">
       <t-dropdown
         :options="[
@@ -39,6 +44,7 @@ import { Icon } from "tdesign-vue-next";
 import { useAppStore, useLocaleStore, useUserStore } from "@/store";
 import type { DropdownOption } from "tdesign-vue-next";
 import { useRoute, useRouter } from "vue-router";
+const appName = import.meta.env.VITE_APP_NAME;
 
 const userStore = useUserStore();
 const appStore = useAppStore();

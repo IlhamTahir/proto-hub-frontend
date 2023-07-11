@@ -8,6 +8,7 @@
     ></iframe>
     <TriggerIsland
       v-if="version"
+      :project-id="projectId"
       @click-version-list="versionListDialog.showDialog"
       :title="`版本号: ${version.number}`"
     ></TriggerIsland>

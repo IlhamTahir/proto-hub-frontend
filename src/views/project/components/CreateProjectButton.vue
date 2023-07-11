@@ -1,23 +1,30 @@
 <template>
-  <t-space>
-    <t-sticky-tool
-      :style="{ position: 'relative', overflow: 'hidden' }"
-      :offset="offset"
-    >
-      <t-sticky-item label="创建项目">
-        <template #icon><add-icon /></template>
-      </t-sticky-item>
-    </t-sticky-tool>
-  </t-space>
+  <div class="create-project-button">
+    <add-icon size="60px" style="color: white" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { AddIcon } from "tdesign-icons-vue-next";
-import { computed } from "vue";
-
-const offset = computed(() => {
-  return [100 - document.documentElement.clientWidth, 100];
-});
 </script>
 
-<style scoped></style>
+<style lang="less" scoped>
+.create-project-button {
+  width: 80px;
+  height: 80px;
+  background: var(--td-brand-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+  }
+}
+</style>

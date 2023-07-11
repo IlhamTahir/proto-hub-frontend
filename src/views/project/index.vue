@@ -5,28 +5,19 @@
         ><project-card :name="item.name" :id="item.id"></project-card
       ></t-col>
     </t-row>
-    <div class="footer">
-      <t-pagination
-        :total="pagination.total"
-        :current="pagination.current"
-        :size="pagination.size"
-        @change="onPageChange"
-      >
-      </t-pagination>
-      <CreateProjectButton
-        @click="createProject.showDialog"
-      ></CreateProjectButton>
-      <CreateProjectDialog
-        :show="createProject.visible.value"
-        @close="createProject.hideDialog"
-        @success="
-          () => {
-            fetchData();
-            createProject.hideDialog();
-          }
-        "
-      ></CreateProjectDialog>
-    </div>
+    <CreateProjectButton
+      @click="createProject.showDialog"
+    ></CreateProjectButton>
+    <CreateProjectDialog
+      :show="createProject.visible.value"
+      @close="createProject.hideDialog"
+      @success="
+        () => {
+          fetchData();
+          createProject.hideDialog();
+        }
+      "
+    ></CreateProjectDialog>
   </div>
 </template>
 
@@ -39,8 +30,9 @@ import CreateProjectButton from "@/views/project/components/CreateProjectButton.
 import { useDialog } from "@/composables/useDialog";
 import CreateProjectDialog from "@/views/project/components/CreateProjectDialog.vue";
 
-const { data, pagination, fetchData, loading, onPageChange } =
-  useSearch<Project>(projectApi);
+const { data, fetchData, loading } = useSearch<Project>(projectApi, {
+  size: 20,
+});
 
 const createProject = useDialog();
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="trigger-island">
-    <t-button size="large" shape="circle" variant="text" @click="$router.back()"
+    <t-button size="large" shape="circle" variant="text" @click="goHome"
       ><icon name="chevron-left"
     /></t-button>
     <div>{{ title }}</div>
@@ -16,8 +16,15 @@
 
 <script lang="ts" setup>
 import { Icon } from "tdesign-icons-vue-next";
+import { useRouter } from "vue-router";
 
-defineProps<{ title: string }>();
+const props = defineProps<{ title: string; projectId: string }>();
+
+const router = useRouter();
+
+const goHome = () => {
+  router.push({ name: "prototype", params: { id: props.projectId } });
+};
 </script>
 
 <style lang="less" scoped>

@@ -1,7 +1,11 @@
 <template>
   <div class="prototype-page">
     <div class="header">
-      <t-button variant="outline" size="large" @click="() => $router.back()">
+      <t-button
+        variant="outline"
+        size="large"
+        @click="() => $router.push({ name: 'project' })"
+      >
         <template #icon> <icon-font name="chevron-left" /> </template>
         返回
       </t-button>
@@ -269,7 +273,7 @@ const versionListDialog = useDialog();
 const updateProtoStatus = useDialog();
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .prototype-page {
   display: flex;
   flex-direction: column;
