@@ -102,7 +102,7 @@ const handleView = (
   });
 };
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "update"]);
 const handleClose = () => {
   emit("close");
 };
@@ -181,7 +181,7 @@ const handleBaselineVersion = async (
     await projectApi.setBaselineVersion(projectId, prototypeId, versionId);
     await MessagePlugin.success("基线版本设置成功！");
     await fetchProtoDetail();
-
+    emit("update");
     fetchData();
   } catch (e: any) {
     await MessagePlugin.error(e.message);

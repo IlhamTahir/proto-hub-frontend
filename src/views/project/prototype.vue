@@ -46,7 +46,7 @@
             theme="primary"
             @click="clickVersionList(row.id)"
           >
-            详情
+            版本列表
           </t-button>
           <t-button
             variant="text"
@@ -70,6 +70,14 @@
             >{{ ProtoStatusLabel[row.status as ProtoStatus].title }}</t-tag
           >
         </template>
+        <template #lastVersionNumber="{ row }">
+          <div>
+            {{ row.lastVersionNumber }}
+          </div>
+          <t-tag theme="success" variant="light-outline"
+            >当前基线版本号： {{ row.baselineVersionNumber }}</t-tag
+          >
+        </template>
       </t-table>
     </t-card>
     <CreateProtoModal
@@ -90,6 +98,7 @@
       :proto-id="editProtoId"
       :project-id="id"
       @close="onVersionListDialogClose"
+      @update="fetchData"
     ></VersionListDialog>
     <UpdateProtoStatusDialog
       :show="updateProtoStatus.visible.value"
@@ -209,13 +218,8 @@ const columns = [
     sorter: true,
   },
 
-  { colKey: "lastVersionLog", title: "更新日志" },
-  {
-    colKey: "baselineVersionNumber",
-    title: "当前基线版本",
-    align: "center",
-  },
-  { colKey: "operation", title: "操作", align: "center", width: 350 },
+  { colKey: "lastVersionLog", title: "更新日志", width: 500 },
+  { colKey: "operation", title: "操作", align: "center", width: 400 },
 ];
 const { data, loading, onPageChange, pagination, fetchData } = useSearch(
   {
