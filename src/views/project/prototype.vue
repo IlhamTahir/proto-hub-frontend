@@ -36,10 +36,9 @@
           <t-button
             variant="text"
             theme="primary"
-            :disabled="!row.lastVersionId"
-            @click="handleView(id, row.id, row.lastVersionId)"
+            @click="clickUpdateVersion(row.id)"
           >
-            预览
+            更新版本
           </t-button>
           <t-button
             variant="text"
@@ -48,35 +47,17 @@
           >
             版本列表
           </t-button>
-          <t-button
-            variant="text"
-            theme="primary"
-            @click="clickUpdateVersion(row.id)"
-          >
-            更新版本
-          </t-button>
-          <t-button
-            variant="text"
-            theme="primary"
-            @click="clickUpdateProtoStatus(row.id, row.status)"
-          >
-            更新状态
-          </t-button>
-        </template>
-        <template #status="{ row }">
-          <t-tag
-            :theme="ProtoStatusLabel[row.status as ProtoStatus].type"
-            variant="light-outline"
-            >{{ ProtoStatusLabel[row.status as ProtoStatus].title }}</t-tag
-          >
         </template>
         <template #lastVersionNumber="{ row }">
-          <div>
-            {{ row.lastVersionNumber }}
-          </div>
-          <t-tag theme="success" variant="light-outline"
-            >当前基线版本号： {{ row.baselineVersionNumber }}</t-tag
+          <t-button
+            v-if="row.lastVersionNumber"
+            variant="text"
+            theme="primary"
+            :disabled="!row.lastVersionId"
+            @click="handleView(id, row.id, row.lastVersionId)"
           >
+            {{ row.lastVersionNumber || "-" }}
+          </t-button>
         </template>
       </t-table>
     </t-card>
@@ -122,7 +103,7 @@ import type { ProtoSearchFilter } from "@/model/proto";
 import { useDialog } from "@/composables/useDialog";
 import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
 import CreateProtoModal from "@/views/project/components/CreateProtoDialog.vue";
-import { ProtoStatus, ProtoStatusLabel } from "@/enums/proto";
+import { ProtoStatus } from "@/enums/proto";
 import VersionListDialog from "@/views/project/components/VersionListDialog.vue";
 import UpdateProtoStatusDialog from "@/views/project/components/UpdateProtoStatusDialog.vue";
 
@@ -134,11 +115,6 @@ const clickUpdateVersion = (protoId: string) => {
   updateVersionDialog.showDialog();
 };
 
-const clickUpdateProtoStatus = (protoId: string, status: ProtoStatus) => {
-  editProtoId.value = protoId;
-  currentProtoStatus.value = status;
-  updateProtoStatus.showDialog();
-};
 const clickVersionList = (protoId: string) => {
   editProtoId.value = protoId;
   versionListDialog.showDialog();
@@ -186,19 +162,6 @@ const list = async (filter: ProtoSearchFilter) => {
 const columns = [
   { colKey: "name", title: "迭代名称", align: "center" },
   {
-    colKey: "status",
-    title: "迭代状态",
-    align: "center",
-    filter: {
-      type: "single",
-      list: [
-        { label: "待开发", value: "TO_DEVELOP" },
-        { label: "开发中", value: "DEVELOPING" },
-        { label: "已开发", value: "DEVELOPED" },
-      ],
-    },
-  },
-  {
     colKey: "createdTime",
     title: "创建时间",
     align: "center",
@@ -208,7 +171,6 @@ const columns = [
     colKey: "lastVersionNumber",
     title: "最新版本",
     align: "center",
-    sorter: true,
   },
 
   {
@@ -217,9 +179,8 @@ const columns = [
     align: "center",
     sorter: true,
   },
-
   { colKey: "lastVersionLog", title: "更新日志", width: 500 },
-  { colKey: "operation", title: "操作", align: "center", width: 400 },
+  { colKey: "operation", title: "操作", align: "center", width: 240 },
 ];
 const { data, loading, onPageChange, pagination, fetchData } = useSearch(
   {

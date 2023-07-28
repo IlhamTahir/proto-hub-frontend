@@ -8,6 +8,17 @@
     @confirm="handleConfirm"
   >
     <t-form ref="form" class="dialog-form" :data="version" :rules="rules">
+      <t-form-item label="迭代阶段" name="stageId">
+        <t-select
+          v-model="version.stageId"
+          :options="stageList"
+          :keys="{
+            value: 'id',
+            label: 'title',
+          }"
+          placeholder="请选择迭代阶段"
+        ></t-select>
+      </t-form-item>
       <t-form-item label="原型文件" name="fileId">
         <t-upload
           v-model="files"
@@ -31,11 +42,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import type { FormInstanceFunctions, UploadFile } from "tdesign-vue-next";
 import fileApi from "@/api/file";
 import projectApi from "@/api/project";
 import { MessagePlugin } from "tdesign-vue-next";
+import type { Stage } from "@/model/stage";
+import { getStageList } from "@/api/stage";
 const emit = defineEmits(["close", "success"]);
 
 interface Props {
@@ -51,9 +64,17 @@ const form = ref<FormInstanceFunctions | null>(null);
 const version = reactive({
   fileId: "",
   log: "",
+  stageId: undefined,
 });
 
 const rules = {
+  stageId: [
+    {
+      required: true,
+      message: "迭代阶段不能为空",
+      trigger: "blur",
+    },
+  ],
   log: [
     {
       required: true,
@@ -125,6 +146,14 @@ const uploadFile = async (file: UploadFile) => {
     };
   }
 };
+
+const stageList = ref<Stage[]>([]);
+
+const fetchStageList = async () => {
+  stageList.value = await getStageList();
+};
+
+onMounted(fetchStageList);
 </script>
 
 <style lang="less" scoped>
