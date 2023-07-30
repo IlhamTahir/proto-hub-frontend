@@ -68,19 +68,26 @@
       @success="handleSuccess"
     ></CreateProtoModal>
     <UpdateVersionDialog
-      :show="updateVersionDialog.visible.value"
+      :show="updateVersionDialogHook.visible.value"
       :project-id="id"
       :proto-id="editProtoId"
       @close="onUpdateVersionDialogClose"
       @success="onUpdateVersionDialogSuccess"
     ></UpdateVersionDialog>
-    <VersionListDialog
-      :show="versionListDialog.visible.value"
+    <!--    <VersionListDialog-->
+    <!--      :show="versionListDialog.visible.value"-->
+    <!--      :proto-id="editProtoId"-->
+    <!--      :project-id="id"-->
+    <!--      @close="onVersionListDialogClose"-->
+    <!--      @update="fetchData"-->
+    <!--    ></VersionListDialog>-->
+    <StageVersionList
       :proto-id="editProtoId"
       :project-id="id"
+      :show="versionListDialog.visible.value"
       @close="onVersionListDialogClose"
       @update="fetchData"
-    ></VersionListDialog>
+    ></StageVersionList>
     <UpdateProtoStatusDialog
       :show="updateProtoStatus.visible.value"
       :proto-id="editProtoId"
@@ -101,18 +108,18 @@ import type { Project } from "@/model/project";
 import { useSearch } from "@/composables/useSearch";
 import type { ProtoSearchFilter } from "@/model/proto";
 import { useDialog } from "@/composables/useDialog";
-import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
 import CreateProtoModal from "@/views/project/components/CreateProtoDialog.vue";
 import { ProtoStatus } from "@/enums/proto";
-import VersionListDialog from "@/views/project/components/VersionListDialog.vue";
 import UpdateProtoStatusDialog from "@/views/project/components/UpdateProtoStatusDialog.vue";
+import StageVersionList from "@/views/project/components/StageVersionList.vue";
+import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
 
 const projectDetail = ref<Project | null>(null);
 const id = useRoute().params.id as string;
 const router = useRouter();
 const clickUpdateVersion = (protoId: string) => {
   editProtoId.value = protoId;
-  updateVersionDialog.showDialog();
+  updateVersionDialogHook.showDialog();
 };
 
 const clickVersionList = (protoId: string) => {
@@ -148,7 +155,7 @@ const searchKey = reactive<{
 
 const onUpdateVersionDialogClose = () => {
   editProtoId.value = "";
-  updateVersionDialog.hideDialog();
+  updateVersionDialogHook.hideDialog();
 };
 const editProtoId = ref("");
 const fetchProjectDetail = async () => {
@@ -196,11 +203,11 @@ const handleSuccess = () => {
 
 const createProtoDialog = useDialog();
 
-const updateVersionDialog = useDialog();
+const updateVersionDialogHook = useDialog();
 
 const onUpdateVersionDialogSuccess = () => {
   fetchData();
-  updateVersionDialog.hideDialog();
+  updateVersionDialogHook.hideDialog();
 };
 
 const onSortChange = (sort: { sortBy: string; descending: boolean }) => {

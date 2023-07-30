@@ -100,6 +100,16 @@ const setBaselineVersion = (
     `/projects/${projectId}/proto/${protoId}/baseline_version/${versionId}`
   );
 };
+
+const getVersionByStage = (
+  projectId: string,
+  protoId: string,
+  stageId: string
+): Promise<Version> => {
+  return request.get(
+    `/projects/${projectId}/proto/${protoId}/version-by-stage?stageId=${stageId}`
+  );
+};
 export default {
   list,
   create,
@@ -112,4 +122,5 @@ export default {
   getProto,
   updateProtoStatus,
   setBaselineVersion,
+  getVersionByStage,
 };
