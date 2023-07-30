@@ -17,6 +17,7 @@
       <t-button
         theme="primary"
         style="margin-bottom: 20px"
+        v-if="canManage()"
         @click="createProtoDialog.showDialog"
       >
         创建迭代
@@ -43,6 +44,7 @@
           <t-button
             variant="text"
             theme="primary"
+            v-if="canManage()"
             @click="clickVersionList(row.id)"
           >
             版本列表
@@ -113,10 +115,21 @@ import { ProtoStatus } from "@/enums/proto";
 import UpdateProtoStatusDialog from "@/views/project/components/UpdateProtoStatusDialog.vue";
 import StageVersionList from "@/views/project/components/StageVersionList.vue";
 import UpdateVersionDialog from "@/views/project/components/UpdateVersionDialog.vue";
+import { useUserStore } from "@/store";
 
 const projectDetail = ref<Project | null>(null);
 const id = useRoute().params.id as string;
 const router = useRouter();
+
+const currentUser = useUserStore().currentUser;
+
+const canManage = () => {
+  return (
+    currentUser &&
+    projectDetail.value &&
+    currentUser.id === projectDetail.value.productOwner.id
+  );
+};
 const clickUpdateVersion = (protoId: string) => {
   editProtoId.value = protoId;
   updateVersionDialogHook.showDialog();

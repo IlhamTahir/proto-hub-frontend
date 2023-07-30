@@ -12,12 +12,12 @@
       @click-version-list="versionListDialog.showDialog"
       :title="`版本号: ${version.number}`"
     ></TriggerIsland>
-    <VersionListDialog
+    <StageVersionList
       :show="versionListDialog.visible.value"
       :proto-id="protoId"
       :project-id="projectId"
       @close="onClose"
-    ></VersionListDialog>
+    ></StageVersionList>
   </div>
 </template>
 
@@ -27,8 +27,8 @@ import { onMounted, ref } from "vue";
 import type { Version } from "@/model/version";
 import projectApi from "@/api/project";
 import TriggerIsland from "@/views/project/components/TriggerIsland.vue";
-import VersionListDialog from "@/views/project/components/VersionListDialog.vue";
 import { useDialog } from "@/composables/useDialog";
+import StageVersionList from "@/views/project/components/StageVersionList.vue";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const route = useRoute();
